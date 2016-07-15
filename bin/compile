@@ -4,7 +4,7 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-CASSANDRA_DOWNLOAD_URL=$(cat ${ENV_DIR}/PROCFILE)
+CASSANDRA_DOWNLOAD_URL=$(cat ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL)
 CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-http://apache.claz.org/cassandra/3.0.8/apache-cassandra-3.0.8-bin.tar.gz}
 basename=$(basename $CASSANDRA_DOWNLOAD_URL)
 mkdir -p .cassandra && cd .cassandra && wget $CASSANDRA_DOWNLOAD_URL && tar zxf $basename && rm $basename
