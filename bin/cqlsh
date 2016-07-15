@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'uri'
+uri = URI.parse(ENV["CASSANDRA_URL"].split(",").first)
+
+str = %(
+[authentication]
+username = %{username}
+password = %{password}
+keyspace = %{keyspace}
+[connection]
+hostname = %{host}
+port = %{port}
+factory = cqlshlib.ssl.ssl_transport_factory
+[cql]
+version = 3.2.1
+[tracing]
+max_trace_wait = 10.0
+[ssl]
+certfile = /tmp/cert
+validate = false
+)
+
+File.open("/tmp/cqlshrc", "w") do |f|
+  f.write(str % { username: uri.user, password: uri.password, host: uri.host, port: uri.port, keyspace: uri.path[1..-1] })
+end
+
+File.open("/tmp/cert", "w") do |f|
+  f.write ENV["CASSANDRA_TRUSTED_CERT"]
+end
+
+exec "cd ~/.cassandra/* && ./bin/cqlsh --cqlshrc /tmp/cqlshrc --ssl"
