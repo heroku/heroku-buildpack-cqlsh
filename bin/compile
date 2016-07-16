@@ -9,4 +9,4 @@ cp bin/cqlsh ${BUILD_DIR}/bin/
 CASSANDRA_DOWNLOAD_URL=$(cat ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL)
 CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-http://apache.claz.org/cassandra/3.0.8/apache-cassandra-3.0.8-bin.tar.gz}
 basename=$(basename $CASSANDRA_DOWNLOAD_URL)
-mkdir -p ${BUILD_DIR}/.cassandra && cd ${BUILD_DIR}/.cassandra && wget $CASSANDRA_DOWNLOAD_URL && tar zxf $basename && rm $basename
+mkdir -p ${BUILD_DIR}/.cassandra && cd ${BUILD_DIR}/.cassandra && wget -q $CASSANDRA_DOWNLOAD_URL && tar zxf $basename && rm $basename
