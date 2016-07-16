@@ -9,4 +9,4 @@ CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-http://apache.claz.org/cassandr
 basename=$(basename $CASSANDRA_DOWNLOAD_URL)
 mkdir -p .cassandra && cd .cassandra && wget $CASSANDRA_DOWNLOAD_URL && tar zxf $basename && rm $basename
 
-cp ./bin/cqlsh ${BUILD_DIR}/bin/cqlsh
+cp bin/cqlsh ${BUILD_DIR}/bin/
