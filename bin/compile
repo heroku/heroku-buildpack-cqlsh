@@ -6,7 +6,13 @@ ENV_DIR=$3
 
 cp bin/cqlsh ${BUILD_DIR}/bin/
 
-CASSANDRA_DOWNLOAD_URL=$(cat ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL)
+echo "-----> Preparing cqlsh buildpack"
+CASSANDRA_DOWNLOAD_URL=$(test -f ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL && cat ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL)
 CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-http://apache.claz.org/cassandra/3.0.8/apache-cassandra-3.0.8-bin.tar.gz}
 basename=$(basename $CASSANDRA_DOWNLOAD_URL)
+
+echo "-----> Downloading & unpacking cassandra"
 mkdir -p ${BUILD_DIR}/.cassandra && cd ${BUILD_DIR}/.cassandra && wget -q $CASSANDRA_DOWNLOAD_URL && tar zxf $basename && rm $basename
+
+echo "-----> Installing cqlsh"
+cd ${BUILD_DIR}/.cassandra/* && rm -rf *.txt lib/*.jar conf doc interface javadoc tools
