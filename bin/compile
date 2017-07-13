@@ -10,7 +10,7 @@ cp bin/cqlsh ${BUILD_DIR}/bin/
 
 echo "-----> Preparing cqlsh buildpack"
 CASSANDRA_DOWNLOAD_URL=$(test -f ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL && cat ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL)
-CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-http://apache.claz.org/cassandra/3.0.8/apache-cassandra-3.0.8-bin.tar.gz}
+CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-http://apache.claz.org/cassandra/3.0.14/apache-cassandra-3.0.14-bin.tar.gz}
 basename=$(basename $CASSANDRA_DOWNLOAD_URL)
 
 echo "-----> Downloading & unpacking cassandra"
