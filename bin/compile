@@ -14,7 +14,7 @@ CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-http://apache.claz.org/cassandr
 basename=$(basename $CASSANDRA_DOWNLOAD_URL)
 
 echo "-----> Downloading & unpacking cassandra"
-mkdir -p ${BUILD_DIR}/.cassandra && cd ${BUILD_DIR}/.cassandra && wget -q $CASSANDRA_DOWNLOAD_URL && tar zxf $basename && rm $basename
+mkdir -p ${BUILD_DIR}/.cassandra && cd ${BUILD_DIR}/.cassandra && curl -q $CASSANDRA_DOWNLOAD_URL > $basename && tar zxf $basename && rm $basename
 
 echo "-----> Installing cqlsh"
 cd ${BUILD_DIR}/.cassandra/* && rm -rf *.txt lib/*.jar conf doc interface javadoc tools
