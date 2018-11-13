@@ -10,11 +10,17 @@ cp bin/cqlsh ${BUILD_DIR}/bin/
 
 echo "-----> Preparing cqlsh buildpack"
 CASSANDRA_DOWNLOAD_URL=$(test -f ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL && cat ${ENV_DIR}/CASSANDRA_DOWNLOAD_URL)
-CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-https://apache.claz.org/cassandra/3.0.14/apache-cassandra-3.0.14-bin.tar.gz}
+CASSANDRA_DOWNLOAD_URL=${CASSANDRA_DOWNLOAD_URL:-https://apache.claz.org/cassandra/3.0.17/apache-cassandra-3.0.17-bin.tar.gz}
 basename=$(basename $CASSANDRA_DOWNLOAD_URL)
 
 echo "-----> Downloading & unpacking cassandra"
-mkdir -p ${BUILD_DIR}/.cassandra && cd ${BUILD_DIR}/.cassandra && curl -q $CASSANDRA_DOWNLOAD_URL > $basename && tar zxf $basename && rm $basename
+mkdir -p ${BUILD_DIR}/.cassandra && cd ${BUILD_DIR}/.cassandra && curl -f -q $CASSANDRA_DOWNLOAD_URL > $basename && tar zxf $basename && rm $basename
+
+rc=$?
+if [[ $rc != 0 ]]; then
+    echo "-----> Unable to download ${CASSANDRA_DOWNLOAD_URL}"
+    exit $rc;
+fi
 
 echo "-----> Installing cqlsh"
 cd ${BUILD_DIR}/.cassandra/* && rm -rf *.txt lib/*.jar conf doc interface javadoc tools
