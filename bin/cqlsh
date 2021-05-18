@@ -19,6 +19,7 @@ max_trace_wait = 10.0
 [ssl]
 certfile = /tmp/cert
 validate = false
+version=TLSv1_2
 )
 
 File.open("/tmp/cqlshrc", "w") do |f|
